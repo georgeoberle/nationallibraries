@@ -15,4 +15,12 @@ library (ggmap)
 library (USAboundaries)
 
 ````
-libraries_davis <- read_csv("~/GitHub/nationallibraries/Data/libraries_davis.csv")
+libraries_davis<- read.csv("~/GitHub/nationallibraries/Data/libraries_davis.csv")
+#These are the processes to use to add columns for geocoded.
+
+libraries_davis%>%
+  mutate(location=paste (locality, state))%>%
+  location_geocoded <- geocode(libraries_davis$location)
+
+
+

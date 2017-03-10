@@ -37,57 +37,21 @@ davies <- read_csv("~/Github/nationallibraries/Data/libraries_davies.csv")
   
 location_geocoded <- geocode(as.character(davies$location))
 
+
+ggplot(davies, aes(x = state, y = founding_date)) +
+  geom_point()
+
+ggplot(davies, aes(x = count(group_by(state))) +
+  geom_histogram()
+
 ###GMU University Libraries Research Leave Day one geocoding data.
 
-libraries_davies<- read.csv("~/GitHub/nationallibraries/Data/libraries_davies.csv")
-#These are the processes to use to add columns for geocoded.
-#First we need to add a location column combines the state and locality and it will be called location.
-libraries_davies<-libraries_davies%>%
-  mutate(location=paste (locality, state, sep=', '))
-write_csv(libraries_davies, "~/GitHub/nationallibraries/Data/libraries_davies.csv")
-          
-#geocode function only allows 2500 "non business" instances per day. Since this dataset has 8528 observations I need to split apart my processes.
-#One method is to divide the data into groups of 2500 and run them through the processes every day. An important nuance to the 2500 limit is that it counts the time from the last completed action from the day before.
-
-libraries_davies<- read.csv("~/GitHub/nationallibraries/Data/libraries_davies.csv")
-
-
-
-location_geocoded <- geocode(as.character(libraries_davies$location))
-
-libraries_davies_location<- read.csv("/GitHub/nationallibraries/Data/libraries_davies_location.csv")
-
-libraries_davies_location_a<-libraries_davies_location_a[1:2499,]
-
-
-
-
-libraries_davis_a_<- geocode(as.character(libraries_davies_location_a$location))
-libraries_davis_a<- bind_cols(libraries_davis_a, libraries_davis_a_)
-libraries_davis_a_geocoded<- (libraries_davis_a_)
-View(libraries_davis_a_)
-
-#A more elegant method suggested by Lincoln Mullen includes the following.
 
 
 
 
 
 
-
-
-
-libraries_davis_b<-libraries_davis[2500:4999,]
-View(libraries_davis_b)
-libraries_davis_b<- geocode(as.character(libraries_davis_b$location))
-View(libray)
-libraries_davis_b<- bind_cols(libraries_davis_b, libraries_davis_b)
-
-
-#libraries_davis_c<-libraries_davis[5000:7400,]
-#libraries_davis_d<-libraries_davis[7401:8528,]
-
-#libraries_davis_geocoded<-bind_rows()
 
 
 

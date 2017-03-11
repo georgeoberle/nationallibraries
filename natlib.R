@@ -38,11 +38,35 @@ davies <- read_csv("~/Github/nationallibraries/Data/libraries_davies.csv")
 location_geocoded <- geocode(as.character(davies$location))
 
 
-ggplot(davies, aes(x = state, y = founding_date)) +
-  geom_point()
+places_combined<-places%>%
+  mutate(location=paste (locality, state, sep=', '))
+write_csv(places, "~/GitHub/nationallibraries/Data/places_combined.csv")
+places_combined_a<-places_combined[1:2499,]
+places_combined_a<-geocode(as.character(places_combined_a$location))
 
-ggplot(davies, aes(x = count(group_by(state))) +
-  geom_histogram()
+places_combined%>%
+  left_join(places_combined_a, by = c("location" = "lon"))
+
+View(places_combined_a)
+
+
+
+
+
+
+
+
+
+libraries_davis_a_geocoded<- (libraries_davis_a_)
+View(libraries_davis_a_)
+
+
+
+libraries_davis_a<- bind_cols(libraries_davis_a, libraries_davis_a_)
+libraries_davis_a_geocoded<- (libraries_davis_a_)
+View(libraries_davis_a_)
+
+
 
 ###GMU University Libraries Research Leave Day one geocoding data.
 

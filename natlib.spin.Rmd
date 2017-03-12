@@ -1,3 +1,5 @@
+
+```{r }
 #Building the Libraries in the Nation
 ####This project focuses on using the data from https://daviesproject.princeton.edu/databases/
 ####Load Libraries
@@ -84,14 +86,11 @@ write_csv(places, "~/GitHub/nationallibraries/Data/places_combined_a.csv")
 
 
 ###Research Day Two
+```
 
 
-
-
-
-
-
-
-
-
-
+---
+title: "natlib.R"
+author: "georgeoberle"
+date: "Sun Mar 12 10:49:40 2017"
+---

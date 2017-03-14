@@ -19,12 +19,13 @@ library(tidyverse)
 
 
 davies <- read_csv("~/Github/nationallibraries/Data/libraries_davies.csv")
+#tidy the data a bit.
   davies <- davies %>%
     filter(!is.na(plus)) %>%
     mutate(locality = str_trim(locality),
            state = str_trim(state),
            type = str_trim(type))
-  
+ # Create a unique types of libraries sets.  
   types <- unique(davies$type)
   
   library_types <- data_frame(davies_types = types)
@@ -65,16 +66,20 @@ placeslatlon<-bind_rows (places_combined_a, places_combined_b)
 libraries_geocoded<-bind_cols (places_combined, placeslatlon)
 write_csv(libraries_geocoded, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
 
+libraries_geocoded<-read.csv("~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
+
 #Need to join the table and have the location geocoded data added to the master libraries data.
-libraries_geocoded%>%
-  left_join(libraries_davies, by = c("location" = "state"))
+libupdate<-davies%>%
+  left_join(libraries_geocoded, by = c("location" = "state"))
+
+write_csv(libupdate, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
 
 
 
 
 
 
-write_csv(places, "~/GitHub/nationallibraries/Data/places_combined.csv")
+viewwrite_csv(places, "~/GitHub/nationallibraries/Data/places_combined.csv")
 
 
 write_csv(places, "~/GitHub/nationallibraries/Data/places_combined_a.csv")

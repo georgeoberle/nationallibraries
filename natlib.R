@@ -12,6 +12,7 @@ library (ggmap)
 library (USAboundaries)
 library(tidyverse)
 library(leaflet)
+library(historydata)
 
 #The data in my work on libraries in the United States came from the _Davies Project_ at Princeton University. Their website identifies the purpose of their project as one that focuses on the history of collections. >Research into the History of Libraries in the United States, especially those at Universities and the History of their Collections The Davies Project is an on-going project at Princeton aimed at increasing knowledge of the history of the collections in university libraries in general and their rare book collections in particular.  
 ###GMU University Libraries Research Leave Day one geocoding data.
@@ -74,6 +75,8 @@ libupdate<-davies%>%
   left_join(libraries_geocoded, by = c("location" = "location"))
 
 write_csv(libupdate, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
+write_csv(libupdate, "~/GitHub/nationallibraries/Data/libupdate.csv")
+
 
 
 
@@ -81,9 +84,7 @@ write_csv(libupdate, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
 
 
 
-
-
-
+dijon_prices
 
 
 

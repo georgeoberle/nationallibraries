@@ -11,6 +11,7 @@ library (tidyr)
 library (ggmap)
 library (USAboundaries)
 library(tidyverse)
+library(leaflet)
 
 #The data in my work on libraries in the United States came from the _Davies Project_ at Princeton University. Their website identifies the purpose of their project as one that focuses on the history of collections. >Research into the History of Libraries in the United States, especially those at Universities and the History of their Collections The Davies Project is an on-going project at Princeton aimed at increasing knowledge of the history of the collections in university libraries in general and their rare book collections in particular.  
 ###GMU University Libraries Research Leave Day one geocoding data.
@@ -19,12 +20,13 @@ library(tidyverse)
 
 
 davies <- read_csv("~/Github/nationallibraries/Data/libraries_davies.csv")
+#tidy the data a bit.
   davies <- davies %>%
     filter(!is.na(plus)) %>%
     mutate(locality = str_trim(locality),
            state = str_trim(state),
            type = str_trim(type))
-  
+ # Create a unique types of libraries sets.  
   types <- unique(davies$type)
   
   library_types <- data_frame(davies_types = types)
@@ -65,27 +67,17 @@ placeslatlon<-bind_rows (places_combined_a, places_combined_b)
 libraries_geocoded<-bind_cols (places_combined, placeslatlon)
 write_csv(libraries_geocoded, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
 
+libraries_geocoded<-read.csv("~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
+
 #Need to join the table and have the location geocoded data added to the master libraries data.
-libraries_geocoded%>%
-  left_join(libraries_davies, by = c("location" = "state"))
+libupdate<-davies%>%
+  left_join(libraries_geocoded, by = c("location" = "location"))
 
-
-
-
-
-
-write_csv(places, "~/GitHub/nationallibraries/Data/places_combined.csv")
-
-
-write_csv(places, "~/GitHub/nationallibraries/Data/places_combined_a.csv")
-
-
+write_csv(libupdate, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
 
 
 
 ###Research Day Two
-
-
 
 
 

@@ -84,9 +84,48 @@ write_csv(libupdate, "~/GitHub/nationallibraries/Data/libupdate.csv")
 
 
 
-dijon_prices
+Practice
+# load package and data
+library(ggplot2)
+libupdate <-read_csv ("~/Github/nationallibraries/Data/libupdate.csv")
+data("libupdate", package="ggplot2")
+
+# Scatterplot
+theme_set(theme_bw())  # pre-set the bw theme.
+g <- ggplot(libupdate, aes(state.x, type))
+g + geom_count(col="navy", show.legend=F) +
+  labs(subtitle="Libraries Type and State", 
+       y="Type", 
+       x="State", 
+       title="Counts Plot")
+
+# Histogram on a Categorical variable
+gg <- ggplot(libupdate, aes(state.x))
+gg + geom_bar(aes(fill=type), width = 0.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Histogram on Categorical Variable", 
+       subtitle="Manufacturer across Vehicle Classes") 
+
+freqtable <- table(libupdate$state.x)
+df <- as.data.frame.table(freqtable)
+head(df)
+
+library(ggplot2)
+theme_set(theme_classic())
+
+# Plot
+g <- ggplot(df, aes(Var1, Freq))
+g + geom_bar(stat="identity", width = 0.5, fill="tomato2") + 
+  labs(title="Bar Chart", 
+       subtitle="Number of Libraries by State", 
+       x= "state",
+       caption="Source: Davies Libraries") +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6))
 
 
-
-
-
+g <- ggplot(libupdate, aes(state.x))
+g + geom_bar(aes(fill=type), width = 0.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  labs(title="Categorywise Bar Chart", 
+       subtitle="Types of Libraries by State", 
+       caption="Source: Libraries Davies")

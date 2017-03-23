@@ -117,7 +117,7 @@ gg + geom_bar(aes(fill=type), width = 0.5) +
   labs(title="Histogram on Categorical Variable", 
        subtitle="Manufacturer across Vehicle Classes") 
 
-freqtable <- table(libupdate$state.x)
+freqtable <- table(libupdate$state)
 df <- as.data.frame.table(freqtable)
 head(df)
 

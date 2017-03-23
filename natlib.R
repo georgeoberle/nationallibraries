@@ -33,7 +33,6 @@ davies <- read_csv("~/Github/nationallibraries/Data/libraries_davies.csv")
   library_types <- data_frame(davies_types = types)
   write_csv(library_types, "library-types.csv")
   
-  
   davies %>%
     left_join(library_types, by = c("type" = "davies_types"))
   
@@ -79,7 +78,6 @@ write_csv(libupdate, "~/GitHub/nationallibraries/Data/libupdate.csv")
 
 
 
-
 ###Research Day Two
 
 
@@ -88,19 +86,32 @@ Practice
 # load package and data
 library(ggplot2)
 libupdate <-read_csv ("~/Github/nationallibraries/Data/libupdate.csv")
-data("libupdate", package="ggplot2")
+data("libupdate")
 
 # Scatterplot
 theme_set(theme_bw())  # pre-set the bw theme.
-g <- ggplot(libupdate, aes(state.x, type))
+g <- ggplot(libupdate, aes(state, type))
 g + geom_count(col="navy", show.legend=F) +
   labs(subtitle="Libraries Type and State", 
        y="Type", 
        x="State", 
        title="Counts Plot")
 
+theme_set(theme_bw())  # pre-set the bw theme.
+g1 <- ggplot(libupdate, aes(founding_date, type))
+g1 + geom_count(col="navy", show.legend=F) +
+  labs(subtitle="Libraries Type and State", 
+       y="Type", 
+       x="State", 
+       title="Counts Plot")
+
+
+#test <- libupdate %>% count(type)
+#View(test)
+
+
 # Histogram on a Categorical variable
-gg <- ggplot(libupdate, aes(state.x))
+gg <- ggplot(libupdate, aes(state))
 gg + geom_bar(aes(fill=type), width = 0.5) + 
   theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
   labs(title="Histogram on Categorical Variable", 
@@ -129,3 +140,37 @@ g + geom_bar(aes(fill=type), width = 0.5) +
   labs(title="Categorywise Bar Chart", 
        subtitle="Types of Libraries by State", 
        caption="Source: Libraries Davies")
+
+library(tidyverse)
+library(historydata)
+library(lubridate)
+
+
+library(ggplot2)
+library(historydata)
+library(USAboundaries)
+library(dplyr)
+library(lubridate)
+
+data("libupdate")
+libupdate_1850 <- founding_date %>% 
+  filter(as.Date(founding_date) <= as.Date("1850-12-31"))
+libupdate_1850
+ 
+ggplot(libupdate, aes(x = lon, y = lat)) +
+  geom_point()
+states_1850 <- us_states("1850-12-31")
+class(states_1850)
+
+states_1880 <- us_states("1880-12-31")
+class(states_1880)
+
+states_1880@data
+
+library(sp)
+plot(states_1880)
+
+library(broom)
+library(maptools)
+
+

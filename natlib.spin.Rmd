@@ -14,6 +14,7 @@ library (ggmap)
 library (USAboundaries)
 library(tidyverse)
 library(leaflet)
+library(historydata)
 
 #The data in my work on libraries in the United States came from the _Davies Project_ at Princeton University. Their website identifies the purpose of their project as one that focuses on the history of collections. >Research into the History of Libraries in the United States, especially those at Universities and the History of their Collections The Davies Project is an on-going project at Princeton aimed at increasing knowledge of the history of the collections in university libraries in general and their rare book collections in particular.  
 ###GMU University Libraries Research Leave Day one geocoding data.
@@ -76,15 +77,65 @@ libupdate<-davies%>%
   left_join(libraries_geocoded, by = c("location" = "location"))
 
 write_csv(libupdate, "~/GitHub/nationallibraries/Data/libraries_geocoded.csv")
+write_csv(libupdate, "~/GitHub/nationallibraries/Data/libupdate.csv")
+
 
 
 
 ###Research Day Two
+
+
+
+Practice
+# load package and data
+library(ggplot2)
+libupdate <-read_csv ("~/Github/nationallibraries/Data/libupdate.csv")
+data("libupdate", package="ggplot2")
+
+# Scatterplot
+theme_set(theme_bw())  # pre-set the bw theme.
+g <- ggplot(libupdate, aes(state.x, type))
+g + geom_count(col="navy", show.legend=F) +
+  labs(subtitle="Libraries Type and State", 
+       y="Type", 
+       x="State", 
+       title="Counts Plot")
+
+# Histogram on a Categorical variable
+gg <- ggplot(libupdate, aes(state.x))
+gg + geom_bar(aes(fill=type), width = 0.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Histogram on Categorical Variable", 
+       subtitle="Manufacturer across Vehicle Classes") 
+
+freqtable <- table(libupdate$state.x)
+df <- as.data.frame.table(freqtable)
+head(df)
+
+library(ggplot2)
+theme_set(theme_classic())
+
+# Plot
+g <- ggplot(df, aes(Var1, Freq))
+g + geom_bar(stat="identity", width = 0.5, fill="tomato2") + 
+  labs(title="Bar Chart", 
+       subtitle="Number of Libraries by State", 
+       x= "state",
+       caption="Source: Davies Libraries") +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6))
+
+
+g <- ggplot(libupdate, aes(state.x))
+g + geom_bar(aes(fill=type), width = 0.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  labs(title="Categorywise Bar Chart", 
+       subtitle="Types of Libraries by State", 
+       caption="Source: Libraries Davies")
 ```
 
 
 ---
 title: "natlib.R"
 author: "georgeoberle"
-date: "Wed Mar 15 09:50:54 2017"
+date: "Thu Mar 16 15:28:49 2017"
 ---

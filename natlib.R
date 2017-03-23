@@ -174,3 +174,18 @@ library(broom)
 library(maptools)
 
 
+#Having trouble with periodize
+periodize <- function(founding_date) {
+  period <- NA
+  period <- ifelse(founding_date >= 1776, "Colonial", period)
+  period <- ifelse(founding_date >= 1776 & year <= 1828, "Early National", period)
+  period <- ifelse(founding_date >= 1828 & year <= 1861, "Antebellum", period)
+  period <- ifelse(founding_date > 1861, "Civil War and Reconstruction", period)
+  period <- ifelse(founding_date)
+  return(period)
+}
+
+
+data <- read_csv ("~/Github/nationallibraries/Data/libupdate.csv")
+data %>%
+  mutate(period = periodize(founding_date))
